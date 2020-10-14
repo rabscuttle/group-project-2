@@ -3,7 +3,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-from flask import Flask, jsonify
+from flask import Flask, render_template, redirect
 
 #################################################
 # Database Setup
@@ -25,13 +25,14 @@ Passenger = Base.classes.passenger # Example
 #################################################
 app = Flask(__name__)
 
-
 #################################################
 # Flask Routes
 #################################################
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+ 
 
 
 if __name__ == '__main__':
