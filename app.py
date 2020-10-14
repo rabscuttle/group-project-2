@@ -10,15 +10,15 @@ from flask import Flask, render_template, redirect
 #################################################
 
 # Create Engine
-engine = create_engine("postgresql:///username:password@localhost/database")
+#engine = create_engine("postgresql:///username:password@localhost/database")
 
 # reflect an existing database into a new model
-Base = automap_base()
+#Base = automap_base()
 # reflect the tables
-Base.prepare(engine, reflect=True)
+#Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-Passenger = Base.classes.passenger # Example
+#Passenger = Base.classes.passenger # Example
 
 #################################################
 # Flask Setup
