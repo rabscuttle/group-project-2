@@ -31,6 +31,7 @@ incident_by_race = base.classes.incident_by_race
 ###############
 # Flask Setup #
 ###############
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 # Effectively disables page caching
 
@@ -40,7 +41,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 # Effectively disables page caching
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", district=district, incident=incident, incident_by_gender=incident_by_gender, incident_by_grade=incident_by_grade, incident_by_race=incident_by_race)
  
 
 # This statement is required for Flask
