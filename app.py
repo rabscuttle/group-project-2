@@ -41,9 +41,18 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 # Effectively disables page caching
 
 @app.route("/")
 def index():
-    return render_template("index.html", district=district, incident=incident, incident_by_gender=incident_by_gender, incident_by_grade=incident_by_grade, incident_by_race=incident_by_race)
+    return render_template("index.html")
  
-
+@app.route("/api/data")
+def api_data():
+    
+    # Query the database
+    session = Session(engine)
+    results = session.query(district.name).all()
+    session.close()
+    
+    return jsonify(results)
+    
 # This statement is required for Flask
 if __name__ == '__main__':
     app.run(debug=True)
