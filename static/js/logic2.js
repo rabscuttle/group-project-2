@@ -12,7 +12,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?acce
 }).addTo(map);
 
 //GeoJSON file locations
-var _1415Data = "./resources/school_district_boundaries_2014_15.geojson";
+var _1415Data = "../data/geojson14_15";
 
   // Get 14-15 GeoJSON
 d3.json(_1415Data).then(function(data) {
