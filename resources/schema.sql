@@ -6,7 +6,7 @@ CREATE TABLE district (
 	name VARCHAR,
 	county INTEGER,
 	number INTEGER,
-	type INTEGER,
+	type INTEGER
 );
 
 -- Create district total table
