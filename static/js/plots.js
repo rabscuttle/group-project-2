@@ -5,8 +5,6 @@ function getGenderGraph(district_number, year) {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
 
-    console.log(filteredData);
-
     
     var female_count = filteredData.map(s => s.female);
     var male_count = filteredData.map(m => m.male);
