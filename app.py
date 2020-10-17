@@ -2,13 +2,13 @@
 # Import #
 ##########
 import numpy as np
-
+import os
 import sqlalchemy
 from config import username, password
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from flask import Flask, render_template, redirect, jsonify
+from flask import Flask, render_template, redirect, jsonify, json
 
 ##################
 # Database Setup #
@@ -208,6 +208,15 @@ def data_race():
    
 
     return jsonify(all_info)
+   
+# THIS IS AN EXAMPLE OF PULLING IN A LOCAL GEOJSON FILE
+@app.route("/data/geojson")
+def showjson():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2014_15.geojson")
+    data = json.load(open(json_url))
+    return data
+    
     
 # This statement is required for Flask
 if __name__ == '__main__':
