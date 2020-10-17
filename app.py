@@ -51,7 +51,7 @@ def data_incident():
     # Query the database
     session = Session(engine)
 
-    results = (session.query(district.id, district.name, district_total.school_year, \
+    results = (session.query(district.id, district.name, district.number, district_total.school_year, \
         incident.alcohol, incident.arson, incident.assault, incident.attendance, incident.bomb, incident.bomb_threat, \
         incident.bullying, incident.computer, incident.controlled_substances, incident.cyber_bullying, \
         incident.disruptive_disorderly, incident.extortion, incident.fighting, incident.gang_activity, \
@@ -65,9 +65,10 @@ def data_incident():
         .all())
     
     all_info = []
-    for id, name, school_year, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
+    for id, name, number, school_year, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
         district_dict = {}
         district_dict["name"] = name 
+        district_dict["number"] = number 
         district_dict["id"] = id
         district_dict["school_year"] = school_year 
         district_dict["alcohol"] = alcohol
@@ -111,7 +112,7 @@ def data_gender():
     # Query the database
     session = Session(engine)
 
-    results = (session.query(district.id, district.name, district_total.school_year, district_total.total_enrollment, \
+    results = (session.query(district.id, district.name, district.number, district_total.school_year, district_total.total_enrollment, \
         district_total.total_female, district_total.total_male, incident_by_gender.female, incident_by_gender.male)
         .filter(district.id == district_total.district_id)
         .filter(incident_by_gender.district_id == district_total.district_id)
@@ -119,9 +120,10 @@ def data_gender():
         .all())
     
     all_info = []
-    for id, name, school_year, total_enrollment, total_female, total_male, female, male  in results:
+    for id, name,  number, school_year, total_enrollment, total_female, total_male, female, male  in results:
         district_dict = {}
         district_dict["name"] = name 
+        district_dict["number"] = number 
         district_dict["id"] = id
         district_dict["school_year"] = school_year 
         district_dict["total_enrollment"] = total_enrollment
@@ -141,7 +143,7 @@ def data_grade():
     # Query the database
     session = Session(engine)
 
-    results = (session.query(district.id, district.name, district_total.school_year, district_total.total_enrollment, \
+    results = (session.query(district.id, district.name, district.number, district_total.school_year, district_total.total_enrollment, \
         district_total.total_grade_k_5, district_total.total_grade_6_8, district_total.total_grade_9_12, \
         incident_by_grade.grade_k_5, incident_by_grade.grade_6_8, incident_by_grade.grade_9_12)
         .filter(district.id == district_total.district_id)
@@ -150,10 +152,11 @@ def data_grade():
         .all())
     
     all_info = []
-    for id, name, school_year, total_enrollment, total_grade_k_5, total_grade_6_8, total_grade_9_12, grade_k_5, grade_6_8, grade_9_12  in results:
+    for id, name,  number, school_year, total_enrollment, total_grade_k_5, total_grade_6_8, total_grade_9_12, grade_k_5, grade_6_8, grade_9_12  in results:
         district_dict = {}
         district_dict["name"] = name 
         district_dict["id"] = id
+        district_dict["number"] = number 
         district_dict["school_year"] = school_year 
         district_dict["total_enrollment"] = total_enrollment
         district_dict["total_grade_k_5"] = total_grade_k_5
@@ -174,7 +177,7 @@ def data_race():
     # Query the database
     session = Session(engine)
 
-    results = (session.query(district.id, district.name, district_total.school_year, district_total.total_enrollment, \
+    results = (session.query(district.id, district.name, district.number, district_total.school_year, district_total.total_enrollment, \
         district_total.total_amer_indian, district_total.total_asian_pacific_islander, district_total.total_hispanic, \
         district_total.total_black, district_total.total_white, district_total.total_multi_race, \
         incident_by_race.amer_indian, incident_by_race.asian_pacific_islander, incident_by_race.hispanic, \
@@ -185,11 +188,12 @@ def data_race():
         .all())
     
     all_info = []
-    for id, name, school_year, total_enrollment, total_amer_indian, total_asian_pacific_islander, total_hispanic, total_black, total_white, total_multi_race, amer_indian, asian_pacific_islander, hispanic, black, white, multi_race in results:
+    for id, name,  number, school_year, total_enrollment, total_amer_indian, total_asian_pacific_islander, total_hispanic, total_black, total_white, total_multi_race, amer_indian, asian_pacific_islander, hispanic, black, white, multi_race in results:
         
         district_dict = {}
         district_dict["name"] = name 
         district_dict["id"] = id
+        district_dict["number"] = number 
         district_dict["school_year"] = school_year 
         district_dict["total_enrollment"] = total_enrollment
         district_dict["total_amer_indian"] = total_amer_indian
@@ -210,13 +214,40 @@ def data_race():
     return jsonify(all_info)
    
 # THIS IS AN EXAMPLE OF PULLING IN A LOCAL GEOJSON FILE
-@app.route("/data/geojson")
-def showjson():
+@app.route("/data/geojson14_15")
+def showjson1415():
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2014_15.geojson")
     data = json.load(open(json_url))
     return data
+
+@app.route("/data/geojson15_16")
+def showjson1516():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2015_16.geojson")
+    data = json.load(open(json_url))
+    return data
+
+@app.route("/data/geojson16_17")
+def showjson1617():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2016_17.geojson")
+    data = json.load(open(json_url))
+    return data
     
+@app.route("/data/geojson17_18")
+def showjson1718():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2017_18.geojson")
+    data = json.load(open(json_url))
+    return data
+
+@app.route("/data/geojson18_19")
+def showjson1819():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "school_district_boundaries_2018_19.geojson")
+    data = json.load(open(json_url))
+    return data
     
 # This statement is required for Flask
 if __name__ == '__main__':
