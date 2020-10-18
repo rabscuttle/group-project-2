@@ -16,15 +16,15 @@ d3.json("../data/gender").then(data => {
     dropdown.add(option, i+1);  
   }
 
+  document.getElementById("district").selectedIndex = "166"
+
 });
 
 function getCharts() {
   var district = d3.select("#district").property("value");
   var year =  d3.select("#year").property("value");
-  getGenderGraph(district, year);
+  setGraphs(district, year);
 }
-
-getGenderGraph(1, '14-15');
 
 // //GeoJSON file locations
 // var _1415Data = "../resources/school_district_boundaries_2014_15.geojson";
