@@ -221,7 +221,7 @@ def data_race():
 
     return jsonify(all_info)
    
-# THIS IS AN EXAMPLE OF PULLING IN A LOCAL GEOJSON FILE
+# Routes to our geoJSON files
 @app.route("/data/geojson14_15")
 def showjson1415():
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
