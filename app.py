@@ -125,6 +125,7 @@ def data_gender():
         .filter(district.id == district_total.district_id)
         .filter(incident_by_gender.district_id == district_total.district_id)
         .filter(incident_by_gender.school_year == district_total.school_year)
+        .order_by(district.name)
         .all())
     
     all_info = []
