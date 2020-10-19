@@ -1,5 +1,5 @@
+//Start off with district Minneapolis, school year 14-15
 setGraphs(1, '14-15')
-
 
 //Call all the functions for the graphs
 function setGraphs(district, year) {
@@ -8,6 +8,33 @@ function setGraphs(district, year) {
   getRaceGraph(district, year);
   getGradeGraph(district, year);
   getIncidentGraph(district, year);
+  getDistrictInfo(district, year);
+}
+
+//District Info
+function getDistrictInfo(district, year) {
+  d3.json("../data/gender").then((data) => {
+      
+    var filteredData = data.filter(sy => sy.school_year == year);
+    var filteredData = filteredData.filter(sy => sy.number == district);
+    var name = filteredData.map(sy => sy.name);
+    var number = filteredData.map(sy => sy.number);
+    var total = filteredData.map(sy => sy.total_enrollment);
+    name = name[0];
+    number = number[0];
+    total = total[0];
+
+    //Get the district info panel on the index page and clear it out
+    var districtinfo = d3.select("#districtinfo");
+    districtinfo.html("");
+
+    //Append 
+    districtinfo.append("p").text("District Name: " + name);
+    districtinfo.append("p").text("District Number: " + number);
+    districtinfo.append("p").text("School Year: " + year);
+    districtinfo.append("p").text("Total Enrollment: " + total.toLocaleString());
+    // districtinfo.append("p").text("District Total Incidents: " + 0);
+  });
 }
 
 //Gender Bar Graph
