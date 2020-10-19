@@ -1,5 +1,4 @@
 id,name,county,number,type
-1,Aitkin Public School District,1,1,1
 2,Hill City Public School District,1,2,1
 3,Mcgregor Public School District,1,4,1
 4,Anoka-Hennepin Public School Dist.,2,11,1
@@ -202,6 +201,7 @@ id,name,county,number,type
 201,Paynesville Public School District,73,741,1
 202,St. Cloud Public School District,73,742,1
 203,Sauk Centre Public School District,73,743,1
+307,Rtr Public Schools,41,2902,1
 204,Albany Public School District,73,745,1
 205,Sartell-St. Stephen School District,73,748,1
 206,Rocori Public School District,73,750,1
@@ -305,7 +305,6 @@ id,name,county,number,type
 304,Redwood Area School District,64,2897,1
 305,Westbrook-Walnut Grove Schools,17,2898,1
 306,Plainview-Elgin-Millville,79,2899,1
-307,Rtr Public Schools,41,2902,1
 308,Ortonville Public Schools,6,2903,1
 309,Tracy Area Public School District,42,2904,1
 310,Tri-City United School District,40,2905,1
@@ -319,8 +318,6 @@ id,name,county,number,type
 491,Lake Benton Public School District,41,404,1
 492,Ellsworth Public School District,53,514,1
 493,Nett Lake Public School District,69,707,1
-494,Campbell-Tintah Public School Dist.,84,852,1
-495,East Central School District,58,2580,1
 496,Clinton-Graceville-Beardsley,6,2888,1
 497,Pine Point Public School District,3,25,1
 498,Hendricks Public School District,41,402,1
@@ -329,4 +326,4 @@ id,name,county,number,type
 501,Eagle Valley Public School District,77,2759,1
 502,Ada-Borup Public School District,54,2854,1
 503,Round Lake-Brewster Public Schools,53,2907,1
-504,United South Central School Dist.,22,2134,1
+1,Aitkin Public School District,1,3000,1

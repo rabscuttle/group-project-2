@@ -1,3 +1,42 @@
+//Start off with district Minneapolis, school year 14-15
+setGraphs(1, '14-15')
+
+//Call all the functions for the graphs
+function setGraphs(district, year) {
+
+  getGenderGraph(district, year);
+  getRaceGraph(district, year);
+  getGradeGraph(district, year);
+  getIncidentGraph(district, year);
+  getDistrictInfo(district, year);
+}
+
+//District Info
+function getDistrictInfo(district, year) {
+  d3.json("../data/gender").then((data) => {
+      
+    var filteredData = data.filter(sy => sy.school_year == year);
+    var filteredData = filteredData.filter(sy => sy.number == district);
+    var name = filteredData.map(sy => sy.name);
+    var number = filteredData.map(sy => sy.number);
+    var total = filteredData.map(sy => sy.total_enrollment);
+    name = name[0];
+    number = number[0];
+    total = total[0];
+
+    //Get the district info panel on the index page and clear it out
+    var districtinfo = d3.select("#districtinfo");
+    districtinfo.html("");
+
+    //Append 
+    districtinfo.append("p").text("District Name: " + name);
+    districtinfo.append("p").text("District Number: " + number);
+    districtinfo.append("p").text("School Year: " + year);
+    districtinfo.append("p").text("Total Enrollment: " + total.toLocaleString());
+    // districtinfo.append("p").text("District Total Incidents: " + 0);
+  });
+}
+
 //Gender Bar Graph
 function getGenderGraph(district_number, year) {
   d3.json("../data/gender").then(data => {
@@ -5,24 +44,21 @@ function getGenderGraph(district_number, year) {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
 
-    
     var female_count = filteredData.map(s => s.female);
     var male_count = filteredData.map(m => m.male);
     var total_female = filteredData.map(tf  => tf.total_female);
     var total_male = filteredData.map(tf  => tf.total_male);
-    var school_year = filteredData.map(sy => sy.school_year);
+
     
     //Discipline Percentages
     var discipline_total = (+female_count) + (+male_count)
     var total_female_percent = +female_count/discipline_total
     var total_male_percent = +male_count/discipline_total
 
-
     //District Percentages
     var district_total = (+total_female) + (+total_male)
     var district_female_percent = +total_female/district_total
     var district_male_percent = +total_male/district_total
-      
  
     var trace1 = {
       x: ['Females', 'Males'],
@@ -55,9 +91,6 @@ function getGenderGraph(district_number, year) {
       }
     };
 
- 
-
-
     var data = [trace1, trace2];
     
     var layout = {
@@ -73,15 +106,12 @@ function getGenderGraph(district_number, year) {
     
     };
   
-  Plotly.newPlot('bar', data, layout);
-}); 
+    Plotly.newPlot('bar1', data, layout);
+  }); 
 }
 
-getGenderGraph(834, '18-19');
-
-/*
 //Ethnicity Bar Graphs
-function getGenderGraph(district_number, year) {
+function getRaceGraph(district_number, year) {
   d3.json("../data/race").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -96,7 +126,6 @@ function getGenderGraph(district_number, year) {
     var white_disctrict_count = filteredData.map(tw =>tw.total_white);
     var multi_race_disctrict_count = filteredData.map(tmr =>tmr.total_multi_race);
     var total_enrollment_disctrict_count = filteredData.map(te =>te.total_enrollment);
-    console.log(white_disctrict_count)
     
     //Variables for District Percentages
     var district_amer_indian_percent = +amer_indian_disctrict_count/+total_enrollment_disctrict_count;
@@ -105,8 +134,7 @@ function getGenderGraph(district_number, year) {
     var district_black_percent = +black_disctrict_count/+total_enrollment_disctrict_count;
     var district_white_percent = +white_disctrict_count/+total_enrollment_disctrict_count;
     var district_multi_race_percent = +multi_race_disctrict_count/+total_enrollment_disctrict_count;
-    console.log(district_white_percent)
-     
+    
   
     //Variables for Discupline Data Counts
     var amer_indian_discipline_count = filteredData.map(ai =>ai.amer_indian);
@@ -172,12 +200,12 @@ function getGenderGraph(district_number, year) {
     
     };
   
-  Plotly.newPlot('bar', data, layout);
-}); 
+    Plotly.newPlot('bar2', data, layout);
+  }); 
 }
-getGenderGraph(6, '18-19'); 
+
 //Grade Bar Chart
-function getGenderGraph(district_number, year) {
+function getGradeGraph(district_number, year) {
   d3.json("../data/race").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -252,12 +280,12 @@ function getGenderGraph(district_number, year) {
     
     };
   
-  Plotly.newPlot('bar', data, layout);
-}); 
+    Plotly.newPlot('bar3', data, layout);
+  }); 
 }
-getGenderGraph(6, '18-19'); 
+
 //Incident Type Pie Chart
-function getGenderGraph(district_number, year) {
+function getIncidentGraph(district_number, year) {
   d3.json("../data/incident").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -318,8 +346,6 @@ function getGenderGraph(district_number, year) {
     
     };
   
-  Plotly.newPlot('bar', data, layout);
-}); 
+    Plotly.newPlot('pie1', data, layout);
+  }); 
 }
-getGenderGraph(6, '18-19'); 
-*/
