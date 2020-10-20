@@ -21,6 +21,15 @@ var layers = {
     EIGNIN: new L.LayerGroup()
   };
 
+//Layer titles for overlay
+var layerTitles = {
+  "SY 2014-15": layers.FOUFIF,
+  "SY 2015-16": layers.FIFSIX,
+  "SY 2016-17": layers.SIXSEV,
+  "SY 2017-18": layers.SEVEIG,
+  "SY 2018-19": layers.EIGNIN
+};
+
 
 // Create the map with our layers
 var map = L.map("map", {
@@ -35,32 +44,62 @@ layers.EIGNIN
 lightmap.addTo(map);  
 
 //Create a layer control and add to map
-L.control.layers(layers, null, {
+L.control.layers(layerTitles, null, {
     collapsed: false
   }).addTo(map);
 
 
-// Style object for 14-15 data
-var _1415Style = {
-  color: "#A30A03",
-  fillColor: "#FAD3D1",
-  fillOpacity: 0.2,
-  weight: 0.5
-};
+// Get 14-15 Incident data
+d3.json("../data/incident").then(function(data) {
+    filteredData1415 = data.filter(sy => sy.school_year == "14-15");
+})
 
 // Get 14-15 GeoJSON
 d3.json(_1415Data).then(function(data) {
     var foufif = L.geoJson(data, {
-      onEachFeature: function(feature, layer) {
-        layer.bindPopup(feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM);
+      style: function(feature) {
+        return {
+          color: "#A30A03",
+          fillColor: "#FAD3D1",
+          fillOpacity: 0.8,
+          weight: 0.5
+        }
       },
-      style: _1415Style 
-    })
-    foufif.addTo(layers.FOUFIF);
+      onEachFeature: function(feature, layer) {
+        for (var i = 0; i < filteredData1415.length; i++) {
+            var incidentTotal = filteredData1415[i].disruptive_disorderly
+            if (filteredData1415[i].number == feature.properties.UNI_MAJ) {
+              layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
+              if (incidentTotal <= 10) {
+                layer.setStyle({fillColor : "#FAD3D1" });
+                console.log(incidentTotal)
+                } 
+              else if (incidentTotal <= 100) {      
+                layer.setStyle({fillColor : "#F3918C"})  
     
-});
+              }
+              else if (incidentTotal <= 500) {
+                layer.setStyle({fillColor : "#EB4F47"})  
+              }
+              else if (incidentTotal <= 1000) {
+                layer.setStyle({fillColor : "#CF2017"}) 
+              }
+              else if (incidentTotal > 1000) {
+                layer.setStyle({fillColor : "#8A150F" }) 
+              }   
+              else {
+                layer.setStyle({fillColor : "white"})  
+              }
+            }
+          }
+      }
 
-// Style object for 15-16 data
+      }) 
+     
+    foufif.addTo(layers.FOUFIF);
+
+  });
+
 var _1516Style = {
   color: "#030A3E",
   fillColor: "#C2E9F7",
@@ -139,4 +178,3 @@ d3.json(_1819Data).then(function(data) {
   eignin.addTo(layers.EIGNIN);
   
 });
-
