@@ -16,6 +16,9 @@
 
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+  <!-- Apex Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <!-- Navbar -->
@@ -60,58 +63,32 @@
         </div>
       </div>
     </div>
-
-      <div class="row">
-          <div class="col-md-12">
-            <table>
-                <tr>
-                  <br>
-                  <br>
-                    <td style="width:300px">
-                        <select class="custom-select" id="district">
-                        </select>
-                    </td>
-                    <td style="width:15px"></td>
-                    <td style="width:200px">
-                        <select class="custom-select" id="year">
-                        <option value="14-15">14-15</option>
-                        <option value="15-16">15-16</option>
-                        <option value="16-17">16-17</option>
-                        <option value="17-18">17-18</option>
-                        <option value="18-19">18-19</option>
-                        </select>
-                    </td>
-                    <td style="width:15px"></td>
-                    <td><button type="button" class="btn btn-primary" id="getCharts">Get Graphs</button></td>
-                </tr>
-            </table>
-          </div>
-      </div>
-      <br>
-      <br>
-    </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div id="bar1"></div>
-        </div>
-        <div class="col-md-6">
-          <div id="bar2"></div>
-        </div>
-      </div>
       <div class="row  pt-3">
         <div class="col-md-6">
-          <div id="bar3"></div>
+          <div id="line1"></div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
           <div id="pie1"></div>
         </div>
       </div>
+      <div class="row pt-3">
+        <div class="col-md-4">
+          <div id="bar1"></div>
+        </div>
+        <div class="col-md-4">
+          <div id="bar2"></div>
+        </div>
+        <div class="col-md-4">
+          <div id="bar3"></div>
+        </div>
+      </div>
   </div>
 
-  <!-- Footer-->
-  <div id="footer">
+  <!-- Footer
+    <div id="footer">
     <p>Project 2</p>
-  </div>
+  </div> -->
   
   <!-- D3 -->
   <script src="https://d3js.org/d3.v5.js"></script>
@@ -131,6 +108,7 @@
   <script type="text/javascript" src="../static/js/logic2.js"></script>
   <script type="text/javascript" src="../static/js/logic.js"></script>
   <script type="text/javascript" src="../static/js/plots.js"></script>
+  <script type="text/javascript" src="../static/js/plots2.js"></script>
   
   <!-- Bootstrap Javascript -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
