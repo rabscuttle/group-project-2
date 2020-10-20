@@ -7,7 +7,7 @@
 
 .card {
   width: 30rem;
-  background-color: lightseagreen;
+  background-color:#8db5b2;
   color: white;
 }
 .card-title {
@@ -34,7 +34,7 @@ h2 {
 }
 
 .nav {
-  background: lightseagreen;
+  background:#7790ad;
   color: white;
   height: 80px;
 }
@@ -56,7 +56,7 @@ h2 {
 }
 
 .nav-link:hover {
-  color: #9A7D0A;
+  color: #BAE3F0;
 }
 
 #footer {
