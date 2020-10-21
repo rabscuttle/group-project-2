@@ -106,6 +106,9 @@ function getGenderGraph(district_number, year) {
     fill: {
       opacity: 1
     },
+    title: {
+      text: 'Gender'
+    },
     colors: ['#7790ad', '#8db5b2']
     };
 
@@ -163,7 +166,7 @@ function getRaceGraph(district_number, year) {
       data: [district_amer_indian_percent, district_asian_pacific_islander_percent, district_hispanic_percent, district_black_percent, district_white_percent, district_multi_race_percent]
     }, {
       name: 'Disciplinary Actions',
-      data: [disc_amer_indian_percent, disc_asian_pacific_islander_percent, disc_hispanic_percent, disc_black_percent, disc_white_percent, disc_multi_race_percent]
+      data: [disc_amer_indian_percent, disc_black_percent, disc_hispanic_percent, disc_multi_race_percent, disc_white_percent, disc_asian_pacific_islander_percent,]
     }],
       chart: {
       type: 'bar',
@@ -185,7 +188,7 @@ function getRaceGraph(district_number, year) {
       colors: ['transparent']
     },
     xaxis: {
-      categories: ['American Indian', 'Asian Pacific Islander', 'Hispanic', 'Black', 'White', 'Multi-Race'],
+      categories: ['American Indian', 'Black', 'Hispanic',  'Multi-Race', 'White', 'Asian Pacific Islander'],
       labels: {
         rotate: 0
       }
@@ -207,6 +210,9 @@ function getRaceGraph(district_number, year) {
     fill: {
       opacity: 1
     },
+    title: {
+      text: 'Race'
+    },
     colors: ['#7790ad', '#8db5b2']
     };
 
@@ -218,28 +224,30 @@ function getRaceGraph(district_number, year) {
 
 //Grade Bar Chart
 function getGradeGraph(district_number, year) {
-  d3.json("../data/race").then(data => {
+  d3.json("../data/grade").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
     
     //Variable for School Year
      var school_year = filteredData.map(sy => sy.school_year);
     //Variables for District Data Counts
-    var grade_k_5_district_count = filteredData.map(tai =>tai.total_amer_indian);
-    var grade_6_8_disctrict_count = filteredData.map(tapi =>tapi.total_asian_pacific_islander);
-    var grade_9_12_district_count = filteredData.map(th =>th.total_hispanic);
+    var grade_k_5_district_count = filteredData.map(k =>k.total_grade_k_5);
+    var grade_6_8_disctrict_count = filteredData.map(six =>six.total_grade_6_8);
+    var grade_9_12_district_count = filteredData.map(nine =>nine.total_grade_9_12);
     var total_enrollment_disctrict_count = filteredData.map(te =>te.total_enrollment);
+    
         
     //Variables for District Percentages
     var district_k_5_percent = (+grade_k_5_district_count/+total_enrollment_disctrict_count * 100).toFixed(2);
     var district_6_8_percent = (+grade_6_8_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
     var district_9_12_percent = (+grade_9_12_district_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    
       
   
     //Variables for Discupline Data Counts
-    var k_5_discipline_count = filteredData.map(ai =>ai.amer_indian);
-    var d6_8_discipline_count = filteredData.map(api =>api.tasian_pacific_islander);
-    var d9_12_discipline_count = filteredData.map(h =>h.hispanic);
+    var k_5_discipline_count = filteredData.map(ai =>ai.grade_k_5);
+    var d6_8_discipline_count = filteredData.map(api =>api.grade_6_8);
+    var d9_12_discipline_count = filteredData.map(h =>h.grade_9_12);
        
     //Variables for Discipline Percentages
     var discipline_total = (+k_5_discipline_count) + (+d6_8_discipline_count)+ (+d9_12_discipline_count);
@@ -293,8 +301,13 @@ function getGradeGraph(district_number, year) {
     fill: {
       opacity: 1
     },
+    title: {
+      text: 'Grade'
+    },
     colors: ['#7790ad', '#8db5b2']
     };
+
+    
 
     var chart = new ApexCharts(document.querySelector("#bar3"), options);
     chart.render();
@@ -416,7 +429,7 @@ function getIncidentGraph(district_number, year) {
             y: +homicide,
           },
           {
-            x: 'Illegal_drugs',
+            x: 'Illegal Drugs',
             y:  +illegal_drugs, 
           },
           {
@@ -497,8 +510,8 @@ function getIncidentGraph(district_number, year) {
           ranges: [
             {
               from: 0,
-              to: 300,
-              color: '#7790ad'
+              to: 200,
+              color: '#0f1f3d'
             },
             
           ]
