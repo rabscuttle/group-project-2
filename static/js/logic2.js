@@ -33,8 +33,8 @@ var layerTitles = {
 
 // Create the map with our layers
 var map = L.map("map", {
-    center: [45.9296, -94.6859],
-    zoom: 7,
+    center: [46.2296, -94.6859],
+    zoom: 6.5,
     layers: [
 layers.EIGNIN
     ]
@@ -67,16 +67,14 @@ d3.json(_1415Data).then(function(data) {
       },
       onEachFeature: function(feature, layer) {
         for (var i = 0; i < filteredData1415.length; i++) {
-            var incidentTotal = filteredData1415[i].disruptive_disorderly
+            var incidentTotal = filteredData1415[i].total_incident
             if (filteredData1415[i].number == feature.properties.UNI_MAJ) {
               layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
               if (incidentTotal <= 10) {
                 layer.setStyle({fillColor : "#FAD3D1" });
-                console.log(incidentTotal)
-                } 
+              } 
               else if (incidentTotal <= 100) {      
-                layer.setStyle({fillColor : "#F3918C"})  
-    
+                layer.setStyle({fillColor : "#F3918C"})      
               }
               else if (incidentTotal <= 500) {
                 layer.setStyle({fillColor : "#EB4F47"})  
@@ -89,9 +87,9 @@ d3.json(_1415Data).then(function(data) {
               }   
               else {
                 layer.setStyle({fillColor : "white"})  
-              }
-            }
-          }
+              };
+            };
+          };
       }
 
       }) 
@@ -100,80 +98,201 @@ d3.json(_1415Data).then(function(data) {
 
   });
 
-var _1516Style = {
-  color: "#030A3E",
-  fillColor: "#C2E9F7",
-  fillOpacity: 0.2,
-  weight: 0.5
-};
+// Get 15-16 Incident data
+d3.json("../data/incident").then(function(data) {
+  filteredData1516 = data.filter(sy => sy.school_year == "15-16");
+})
 
 // Get 15-16 GeoJSON
 d3.json(_1516Data).then(function(data) {
   var fifsix = L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM);
+    style: function(feature) {
+      return {
+        color: "#030A3E",
+        fillColor: "#B4DDF1",
+        fillOpacity: 0.8,
+        weight: 0.5
+      }
     },
-    style: _1516Style 
-  })
+    onEachFeature: function(feature, layer) {
+      for (var i = 0; i < filteredData1516.length; i++) {
+          var incidentTotal = filteredData1516[i].total_incident
+          if (filteredData1516[i].number == feature.properties.UNI_MAJ) {
+            layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
+            if (incidentTotal <= 10) {
+              layer.setStyle({fillColor : "#B4DDF1" });
+            } 
+            else if (incidentTotal <= 100) {      
+              layer.setStyle({fillColor : "#8AC9E8"})      
+            }
+            else if (incidentTotal <= 500) {
+              layer.setStyle({fillColor : "#588195"})  
+            }
+            else if (incidentTotal <= 1000) {
+              layer.setStyle({fillColor : "#38525F"}) 
+            }
+            else if (incidentTotal > 1000) {
+              layer.setStyle({fillColor : "#24353D" }) 
+            }   
+            else {
+              layer.setStyle({fillColor : "white"})  
+            };
+          };
+        };
+    }
+
+    })
   fifsix.addTo(layers.FIFSIX);
   
 });
 
-// Style object for 16-17 data
-var _1617Style = {
-  color: "#063A0A",
-  fillColor: "#C2F7C7",
-  fillOpacity: 0.2,
-  weight: 0.5
-};
+// Get 16-17 Incident data
+d3.json("../data/incident").then(function(data) {
+  filteredData1617 = data.filter(sy => sy.school_year == "16-17");
+})
 
 // Get 16-17 GeoJSON
 d3.json(_1617Data).then(function(data) {
   var sixsev = L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM);
+    style: function(feature) {
+      return {
+        color: "#000042",
+        fillColor: "#ACACFF",
+        fillOpacity: 0.8,
+        weight: 0.5
+      }
     },
-    style: _1617Style 
+    onEachFeature: function(feature, layer) {
+      for (var i = 0; i < filteredData1617.length; i++) {
+          var incidentTotal = filteredData1617[i].total_incident
+          if (filteredData1617[i].number == feature.properties.UNI_MAJ) {
+            layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
+            if (incidentTotal <= 10) {
+              layer.setStyle({fillColor : "#ACACFF" });
+            } 
+            else if (incidentTotal <= 100) {      
+              layer.setStyle({fillColor : "#7D7DFF"})      
+            }
+            else if (incidentTotal <= 500) {
+              layer.setStyle({fillColor : "#3333FF"})  
+            }
+            else if (incidentTotal <= 1000) {
+              layer.setStyle({fillColor : "#0000CC"}) 
+            }
+            else if (incidentTotal > 1000) {
+              layer.setStyle({fillColor : "#000068" }) 
+            }   
+            else {
+              layer.setStyle({fillColor : "white"})  
+            };
+          };
+        };
+    }
+
   })
   sixsev.addTo(layers.SIXSEV);
   
 });
 
-// Style object for 17-18 data
-var _1718Style = {
-  color: "#1E0B48",
-  fillColor: "#DACBFC",
-  fillOpacity: 0.2,
-  weight: 0.5
-};
+
+// Get 17-18 Incident data
+d3.json("../data/incident").then(function(data) {
+  filteredData1718 = data.filter(sy => sy.school_year == "17-18");
+})
 
 // Get 17-18 GeoJSON
 d3.json(_1718Data).then(function(data) {
   var seveig = L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM);
+    style: function(feature) {
+      return {
+        color: "#1E0B48",
+        fillColor: "#DACDF7",
+        fillOpacity: 0.8,
+        weight: 0.5
+      }
     },
-    style: _1718Style 
+    onEachFeature: function(feature, layer) {
+      for (var i = 0; i < filteredData1718.length; i++) {
+          var incidentTotal = filteredData1718[i].total_incident
+          if (filteredData1718[i].number == feature.properties.UNI_MAJ) {
+            layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
+            if (incidentTotal <= 10) {
+              layer.setStyle({fillColor : "#DACDF7" });
+            } 
+            else if (incidentTotal <= 100) {      
+              layer.setStyle({fillColor : "#C6B2F3"})      
+            }
+            else if (incidentTotal <= 500) {
+              layer.setStyle({fillColor : "#A687EC"})  
+            }
+            else if (incidentTotal <= 1000) {
+              layer.setStyle({fillColor : "#6A5697"}) 
+            }
+            else if (incidentTotal > 1000) {
+              layer.setStyle({fillColor : "#443761" }) 
+            }   
+            else {
+              layer.setStyle({fillColor : "white"})  
+            };
+          };
+        };
+    }
   })
+
   seveig.addTo(layers.SEVEIG);
   
 });
 
-// Style object for 18-19 data
-var _1819Style = {
-  color: "#F05512",
-  fillColor: "#F5C7B3",
-  fillOpacity: 0.2,
-  weight: 0.5
-};
+// // Style object for 18-19 data
+// var _1819Style = {
+//   color: "#F05512",
+//   fillColor: "#F5C7B3",
+//   fillOpacity: 0.2,
+//   weight: 0.5
+// };
+
+// Get 18-19 Incident data
+d3.json("../data/incident").then(function(data) {
+  filteredData1819 = data.filter(sy => sy.school_year == "18-19");
+})
 
 // Get 18-19 GeoJSON
 d3.json(_1819Data).then(function(data) {
   var eignin = L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM);
+    style: function(feature) {
+      return {
+        color: "#063A0A",
+        fillColor: "#CDDDC7",
+        fillOpacity: 0.8,
+        weight: 0.5
+      }
     },
-    style: _1819Style 
+    onEachFeature: function(feature, layer) {
+      for (var i = 0; i < filteredData1819.length; i++) {
+          var incidentTotal = filteredData1819[i].total_incident
+          if (filteredData1819[i].number == feature.properties.UNI_MAJ) {
+            layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
+            if (incidentTotal <= 10) {
+              layer.setStyle({fillColor : "#CDDDC7" });
+            } 
+            else if (incidentTotal <= 100) {      
+              layer.setStyle({fillColor : "#B1CBA7"})      
+            }
+            else if (incidentTotal <= 500) {
+              layer.setStyle({fillColor : "#85AE76"})  
+            }
+            else if (incidentTotal <= 1000) {
+              layer.setStyle({fillColor : "#556F4B"}) 
+            }
+            else if (incidentTotal > 1000) {
+              layer.setStyle({fillColor : "#364730" }) 
+            }   
+            else {
+              layer.setStyle({fillColor : "white"})  
+            };
+          };
+        };
+    }
   })
   eignin.addTo(layers.EIGNIN);
   
