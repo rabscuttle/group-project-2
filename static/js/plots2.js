@@ -59,7 +59,7 @@ function getLineGraph(district) {
       size: 1
     },
     xaxis: {
-      categories: ['18-19', '17-18', '16-17', '15-16', '14-15'],
+      categories: ['14-15', '15-16', '16-17', '17-18', '18-19'],
       title: {
         text: 'School Year'
       }

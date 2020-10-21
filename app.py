@@ -70,6 +70,7 @@ def data_incident():
         .filter(district.id == district_total.district_id)
         .filter(incident.district_id == district_total.district_id)
         .filter(incident.school_year == district_total.school_year)
+        .order_by(district_total.school_year)
         .all())
     
     all_info = []

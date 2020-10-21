@@ -52,15 +52,23 @@ function getGenderGraph(district_number, year) {
     var total_female = filteredData.map(tf  => tf.total_female);
     var total_male = filteredData.map(tf  => tf.total_male);
 
+    
+
     //Discipline Percentages
     var discipline_total = (+female_count) + (+male_count)
     var total_female_percent = (+female_count/discipline_total * 100).toFixed(2)
     var total_male_percent = (+male_count/discipline_total * 100).toFixed(2)
 
+    console.log(female_count)
+    console.log(male_count)
+    console.log(total_female_percent)
+    console.log(total_male_percent)
+
     //District Percentages
     var district_total = (+total_female) + (+total_male)
     var district_female_percent = (+total_female/district_total *100).toFixed(2)
     var district_male_percent = (+total_male/district_total * 100).toFixed(2)
+
  
     var options = {
       series: [{
@@ -90,7 +98,7 @@ function getGenderGraph(district_number, year) {
       colors: ['transparent']
     },
     xaxis: {
-      categories: ['Male', 'Female'],
+      categories: ['Female', 'Male'],
     },
     yaxis: {
       title: {
