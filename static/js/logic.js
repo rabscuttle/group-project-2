@@ -1,5 +1,6 @@
-// var filterButton = d3.select("#getCharts");
-// filterButton.on("click", getCharts);
+
+var filterButton = d3.select("#getCharts");
+filterButton.on("click", getCharts);
 
 // d3.json("../data/gender").then(data => {
 
@@ -74,3 +75,4 @@
 //     // console.log(test)
 //     L.geoJson(data).addTo(map);
 // });
+*/
