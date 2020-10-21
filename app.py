@@ -60,7 +60,7 @@ def data_incident():
     session = Session(engine)
 
     results = (session.query(district.id, district.name, district.number, district_total.school_year, \
-        incident.alcohol, incident.arson, incident.assault, incident.attendance, incident.bomb, incident.bomb_threat, \
+        incident.total_incident, incident.alcohol, incident.arson, incident.assault, incident.attendance, incident.bomb, incident.bomb_threat, \
         incident.bullying, incident.computer, incident.controlled_substances, incident.cyber_bullying, \
         incident.disruptive_disorderly, incident.extortion, incident.fighting, incident.gang_activity, \
         incident.harassment, incident.hazing, incident.homicide, incident.illegal_drugs, incident.over_the_counter_meds, \
@@ -73,12 +73,13 @@ def data_incident():
         .all())
     
     all_info = []
-    for id, name, number, school_year, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
+    for id, name, number, school_year, total_incident, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
         district_dict = {}
         district_dict["name"] = name 
         district_dict["number"] = number 
         district_dict["id"] = id
         district_dict["school_year"] = school_year 
+        district_dict["total_incident"] = total_incident
         district_dict["alcohol"] = alcohol
         district_dict["arson"] = arson
         district_dict["assault"] = assault
@@ -223,6 +224,14 @@ def data_race():
     return jsonify(all_info)
    
 # Routes to our geoJSON files
+@app.route("/data/minnesota")
+def showjsonmn():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "resources", "minnesota.geojson")
+    data = json.load(open(json_url))
+    return data
+
+
 @app.route("/data/geojson14_15")
 def showjson1415():
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
