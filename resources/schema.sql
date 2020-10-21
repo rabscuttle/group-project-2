@@ -34,6 +34,7 @@ CREATE TABLE incident (
 	id SERIAL PRIMARY KEY,
 	district_id INTEGER,
 	school_year VARCHAR,
+	total_incident INTEGER,
 	alcohol INTEGER,
 	arson INTEGER,
 	assault INTEGER,
