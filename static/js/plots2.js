@@ -1,23 +1,25 @@
-getLineGraph(1);
 
 function getLineGraph(district) {
 
-  d3.json("../data/gender").then((data) => {
-      
+  d3.json("../data/incident").then((data) => {
+    
+    //Filter by district sent int
     var filteredData = data.filter(sy => sy.number == district);
-    var total = filteredData.map(sy => sy.total_enrollment);
 
-    var test = [12000, 11000, 14000, 18000, 17000];
+    //Get the total enrollment and total incidents for the district
+    var total_enrollment = filteredData.map(sy => sy.total_enrollment);
+    var total_incident = filteredData.map(sy => sy.total_incident);
 
+    //Create the apexchart line graph
     var options = {
       series: [
       {
         name: "Enrollment",
-        data: total
+        data: total_enrollment
       },
       {
-        name: "Not Enrollment",
-        data: test
+        name: "Incident",
+        data: total_incident
       }
     ],
       chart: {
@@ -57,7 +59,7 @@ function getLineGraph(district) {
       size: 1
     },
     xaxis: {
-      categories: ['14-15', '15-16', '16-17', '17-18', '18-19'],
+      categories: ['18-19', '17-18', '16-17', '15-16', '14-15'],
       title: {
         text: 'School Year'
       }
@@ -76,6 +78,7 @@ function getLineGraph(district) {
     }
     };
 
+    //Set it in the index.html
     var chart = new ApexCharts(document.querySelector("#line1"), options);
     chart.render();
   }); 
