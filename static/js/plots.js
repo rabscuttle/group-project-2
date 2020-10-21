@@ -1,5 +1,5 @@
 //Start off with district Minneapolis, school year 14-15
-setGraphs(833, '14-15')
+setGraphs(1, '18-19')
 
 //Call all the functions for the graphs
 function setGraphs(district, year) {
@@ -58,11 +58,6 @@ function getGenderGraph(district_number, year) {
     var discipline_total = (+female_count) + (+male_count)
     var total_female_percent = (+female_count/discipline_total * 100).toFixed(2)
     var total_male_percent = (+male_count/discipline_total * 100).toFixed(2)
-
-    console.log(female_count)
-    console.log(male_count)
-    console.log(total_female_percent)
-    console.log(total_male_percent)
 
     //District Percentages
     var district_total = (+total_female) + (+total_male)
@@ -197,7 +192,7 @@ function getRaceGraph(district_number, year) {
       colors: ['transparent']
     },
     xaxis: {
-      categories: ['American Indian', 'Black', 'Hispanic',  'Multi-Race', 'White', 'Asian Pacific Islander'],
+      categories: ['Amer Ind', 'Black', 'Hispanic',  'Multi', 'White', 'Asian Pac Islnd'],
       labels: {
         rotate: 0
       }
@@ -317,7 +312,6 @@ function getGradeGraph(district_number, year) {
     chart.render();
   }); 
 }
-
 
 //Incident Type Radial Chart
 function getIncidentGraph(district_number, year) {
@@ -485,7 +479,7 @@ function getIncidentGraph(district_number, year) {
       show: false
     },
     chart: {
-      height: 350,
+      height: 400,
       type: 'treemap'
     },
     title: {
@@ -523,4 +517,90 @@ function getIncidentGraph(district_number, year) {
     var chart = new ApexCharts(document.querySelector("#pie1"), options);
     chart.render();
   }); 
+}
+
+function getLineGraph(district) {
+
+  d3.json("../data/incident").then((data) => {
+    
+    //Filter by district sent int
+    var filteredData = data.filter(sy => sy.number == district);
+
+    //Get the total enrollment and total incidents for the district
+    var total_enrollment = filteredData.map(sy => sy.total_enrollment);
+    var total_incident = filteredData.map(sy => sy.total_incident);
+
+    //Create the apexchart line graph
+    var options = {
+      series: [
+      {
+        name: "Enrollment",
+        data: total_enrollment
+      },
+      {
+        name: "Incident",
+        data: total_incident
+      }
+    ],
+      chart: {
+      height: 400,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#7790ad', '#8db5b2'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'District Enrollment/Incident Trends for all School Years',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: ['14-15', '15-16', '16-17', '17-18', '18-19'],
+      title: {
+        text: 'School Year'
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Enrollment'
+      }
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+    };
+
+    //Set it in the index.html
+    var chart = new ApexCharts(document.querySelector("#line1"), options);
+    chart.render();
+  }); 
+
 }
