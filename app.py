@@ -18,7 +18,7 @@ database_name = 'MNDistrictData'
 connection_string = f'postgresql://{username}:{password}@localhost:5432/{database_name}'
 
 # Connect to the database
-engine = create_engine(connection_string)
+engine = create_engine(connection_string, pool_size=20, max_overflow=40)
 base = automap_base()
 base.prepare(engine, reflect=True)
 
@@ -59,7 +59,7 @@ def data_incident():
     # Query the database
     session = Session(engine)
 
-    results = (session.query(district.id, district.name, district.number, district_total.school_year, \
+    results = (session.query(district.id, district.name, district.number, district_total.school_year, district_total.total_enrollment,\
         incident.total_incident, incident.alcohol, incident.arson, incident.assault, incident.attendance, incident.bomb, incident.bomb_threat, \
         incident.bullying, incident.computer, incident.controlled_substances, incident.cyber_bullying, \
         incident.disruptive_disorderly, incident.extortion, incident.fighting, incident.gang_activity, \
@@ -70,15 +70,17 @@ def data_incident():
         .filter(district.id == district_total.district_id)
         .filter(incident.district_id == district_total.district_id)
         .filter(incident.school_year == district_total.school_year)
+        .order_by(district_total.school_year)
         .all())
     
     all_info = []
-    for id, name, number, school_year, total_incident, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
+    for id, name, number, school_year, total_enrollment, total_incident, alcohol, arson, assault, attendance, bomb, bomb_threat, bullying, computer, controlled_substances, cyber_bullying, disruptive_disorderly, extortion, fighting, gang_activity, harassment, hazing, homicide, illegal_drugs, over_the_counter_meds, pyrotechnics, robbery_using_force, terroristic_threats, theft, threat_intimidation, tobacco, vandalism, verbal_abuse, weapon, other in results:
         district_dict = {}
         district_dict["name"] = name 
         district_dict["number"] = number 
         district_dict["id"] = id
         district_dict["school_year"] = school_year 
+        district_dict["total_enrollment"] = total_enrollment
         district_dict["total_incident"] = total_incident
         district_dict["alcohol"] = alcohol
         district_dict["arson"] = arson
