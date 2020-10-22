@@ -74,3 +74,12 @@ h2 {
   margin: 0;
   font-size: 16px;
 }
+
+h5 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 14px;
+}
