@@ -39,6 +39,18 @@ h2 {
   height: 80px;
 }
 
+#tab {
+  background:#8db5b2;
+  color: white;
+  height: 80px;
+  font-size: 14px;
+}
+
+#tab-font {
+  color: white;
+  font-size: 14px;
+}
+
 .nav-link {
   color: white;
   font-size: 28px;
@@ -82,4 +94,9 @@ h5 {
 
 h6 {
   font-size: 14px;
+}
+
+.btn-default {
+  background-color: #8db5b2 !important;
+  color:white !important
 }

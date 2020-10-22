@@ -1,4 +1,4 @@
-//Start off with district Minneapolis, school year 14-15
+//Start off with district Minneapolis, school year 18-19
 setGraphs(1, '18-19')
 
 //Call all the functions for the graphs
@@ -36,7 +36,7 @@ function getDistrictInfo(district, year) {
     districtinfo.append("p").text("District Number: " + number);
     districtinfo.append("p").text("School Year: " + year);
     districtinfo.append("p").text("Total Enrollment: " + total.toLocaleString());
-    districtinfo.append("p").text("District Total Incidents: " + total_incident.toLocaleString());
+    districtinfo.append("p").text("Total Incidents: " + total_incident.toLocaleString());
   });
 }
 
@@ -53,7 +53,6 @@ function getGenderGraph(district_number, year) {
     var total_male = filteredData.map(tf  => tf.total_male);
 
     
-
     //Discipline Percentages
     var discipline_total = (+female_count) + (+male_count)
     var total_female_percent = (+female_count/discipline_total * 100).toFixed(2)
@@ -126,11 +125,8 @@ function getRaceGraph(district_number, year) {
   d3.json("../data/race").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
-    
-    //Variable for School Year
-     var school_year = filteredData.map(sy => sy.school_year);
+  
     //Variables for District Data Counts
-
     var amer_indian_disctrict_count = filteredData.map(tai =>tai.total_amer_indian);
     var asian_pacific_islander_disctrict_count = filteredData.map(tapi =>tapi.total_asian_pacific_islander);
     var hispanic_disctrict_count = filteredData.map(th =>th.total_hispanic);
@@ -232,8 +228,6 @@ function getGradeGraph(district_number, year) {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
     
-    //Variable for School Year
-     var school_year = filteredData.map(sy => sy.school_year);
     //Variables for District Data Counts
     var grade_k_5_district_count = filteredData.map(k =>k.total_grade_k_5);
     var grade_6_8_disctrict_count = filteredData.map(six =>six.total_grade_6_8);
