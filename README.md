@@ -9,7 +9,7 @@
 
 3) Right click on 'MNDistrictData' and select Query Tool...
 
-4) Create the tables from the scheam.sql file.  This can be done by dragging the file (located in the Resources directory) into a query tool or using the Open file menu item to navigate to the Resources directory.  Run the SQL.
+4) Create the tables from the schema.sql file.  This can be done by dragging the file (located in the Resources directory) into a query tool or using the Open file menu item to navigate to the Resources directory.  Run the SQL.
 
 5) Populate each table with one of the .csv files in the Resources directory. There is a .csv file with the same name as each table. **NOTE: The district table must be populated first.**
 
@@ -21,24 +21,24 @@
 
 	d) Under 'Miscellaneous', verify 'Header' is set to 'Yes'
 
-6) In the root directory (where app.py lives) create a 'config.py' with your PGAdmin username and password:
+6) In the root directory (where app.py lives) create a config.py with your PGAdmin username and password:
 
-	`username = x`
+		username = x
 
-	`password = x`
+		password = x
 
-7) In the 'static/js' directory, create a 'config.js' with your api key
+7) In the 'static/js' directory, create a config.js with your api key
 
-	`const API_KEY = x`
+		const API_KEY = x
 
 # Run the server
 1) Once your database and config files are set up, open a GitBash window (or New Termial at Folder if on a Mac) for the directory of the repository and activate your environment
 
-	`source activate NewPythonData`
+		source activate NewPythonData
 
 2) Run app.py
 
-		`python app.py`
+		python app.py 
 
 3) In a web browser (preferably Google Chrome) navigate to http://127.0.0.1:5000/
 
