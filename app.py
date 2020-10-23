@@ -130,6 +130,7 @@ def data_gender():
         .filter(incident_by_gender.district_id == district_total.district_id)
         .filter(incident_by_gender.school_year == district_total.school_year)
         .order_by(district.name)
+        .order_by(district_total.school_year)
         .all())
     
     all_info = []
@@ -162,6 +163,8 @@ def data_grade():
         .filter(district.id == district_total.district_id)
         .filter(incident_by_grade.district_id == district_total.district_id)
         .filter(incident_by_grade.school_year == district_total.school_year)
+        .order_by(district.name)
+        .order_by(district_total.school_year)
         .all())
     
     all_info = []
@@ -198,6 +201,8 @@ def data_race():
         .filter(district.id == district_total.district_id)
         .filter(incident_by_race.district_id == district_total.district_id)
         .filter(incident_by_race.school_year == district_total.school_year)
+        .order_by(district.name)
+        .order_by(district_total.school_year)
         .all())
     
     all_info = []
