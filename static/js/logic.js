@@ -74,10 +74,7 @@ d3.json(_1415Data).then(function(data) {
             var incidentTotal = filteredData1415[i].total_incident
             if (filteredData1415[i].number == feature.properties.UNI_MAJ) {
               layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
-              if (feature.properties.UNI_MAJ == 1) {
-                layer.setStyle({fillColor : "yellow" }) 
-              } 
-              else if (incidentTotal <= 10) {
+              if (incidentTotal <= 10) {
                 layer.setStyle({fillColor : "#FAD3D1" });
               } 
               else if (incidentTotal <= 100) {      
@@ -140,10 +137,7 @@ d3.json(_1516Data).then(function(data) {
           var incidentTotal = filteredData1516[i].total_incident
           if (filteredData1516[i].number == feature.properties.UNI_MAJ) {
             layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
-            if (feature.properties.UNI_MAJ == 1) {
-                layer.setStyle({fillColor : "yellow" }) 
-            }
-            else if (incidentTotal <= 10) {
+            if (incidentTotal <= 10) {
               layer.setStyle({fillColor : "#B4DDF1" });
             } 
             else if (incidentTotal <= 100) {      
@@ -205,10 +199,7 @@ d3.json(_1617Data).then(function(data) {
           var incidentTotal = filteredData1617[i].total_incident
           if (filteredData1617[i].number == feature.properties.UNI_MAJ) {
             layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
-            if (feature.properties.UNI_MAJ == 1) {
-                layer.setStyle({fillColor : "yellow" }) 
-            }
-            else if (incidentTotal <= 10) {
+            if (incidentTotal <= 10) {
               layer.setStyle({fillColor : "#ACACFF" });
             } 
             else if (incidentTotal <= 100) {      
@@ -271,10 +262,7 @@ d3.json(_1718Data).then(function(data) {
           var incidentTotal = filteredData1718[i].total_incident
           if (filteredData1718[i].number == feature.properties.UNI_MAJ) {
             layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
-            if (feature.properties.UNI_MAJ == 1) {
-                layer.setStyle({fillColor : "yellow" }) 
-              }
-            else if (incidentTotal <= 10) {
+            if (incidentTotal <= 10) {
               layer.setStyle({fillColor : "#DACDF7" });
             } 
             else if (incidentTotal <= 100) {      
@@ -336,10 +324,7 @@ d3.json(_1819Data).then(function(data) {
           var incidentTotal = filteredData1819[i].total_incident
           if (filteredData1819[i].number == feature.properties.UNI_MAJ) {
             layer.bindPopup("<h5>" + feature.properties.UNI_MAJ + ": " + feature.properties.UNI_NAM + "</h5> <hr> <h6>" + "Total Incidents: " + incidentTotal + "</h6>");
-            if (feature.properties.UNI_MAJ == 1) {
-                layer.setStyle({fillColor : "yellow" }) 
-              }
-            else if (incidentTotal <= 10) {
+            if (incidentTotal <= 10) {
               layer.setStyle({fillColor : "#CDDDC7" });
             } 
             else if (incidentTotal <= 100) {      
