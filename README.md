@@ -46,3 +46,6 @@
 The MN School Districts Discipline Data project visualizes the data associated with each school district's disciplinary incidents recorded in the state of Minnesota. School years included are 14-15, 15-16, 16-17, and 18-19.  Minnesota public school districts self-report student disciplinary data through Minnesota Department of Education's electronic disciplinary incident reporting system (DIRS). The data summarize the disciplinary incidents as well as student demographic data (grade, gender, race/ethnicity) for disciplinary actions. A disciplinary action is defined as an out of school suspension for one day or more, expulsion or exclusion.
  
 Our dashboard allows this data to be analyzed by each district via a map of Minnesota with each school district outlined.  Our charts shows the trends of enrollment vs. incidents over time as well as the number of incidents by gender, grade and race.  Total enrollment for each district is included in our charts to give the break down of each category context.
+
+### References
+Coding for legend uses Leaflet.Legend plugin developed by GitHub user "ptma" and distributed under MIT License (link to copyright notice - https://github.com/ptma/Leaflet.Legend/blob/master/LICENSE)
