@@ -163,7 +163,7 @@ function getRaceGraph(district_number, year) {
     var options = {
       series: [{
       name: 'Enrollment',
-      data: [district_amer_indian_percent, district_asian_pacific_islander_percent, district_hispanic_percent, district_black_percent, district_white_percent, district_multi_race_percent]
+      data: [district_amer_indian_percent, district_black_percent, district_hispanic_percent, district_multi_race_percent, district_white_percent, district_asian_pacific_islander_percent]
     }, {
       name: 'Disciplinary Actions',
       data: [disc_amer_indian_percent, disc_black_percent, disc_hispanic_percent, disc_multi_race_percent, disc_white_percent, disc_asian_pacific_islander_percent,]
