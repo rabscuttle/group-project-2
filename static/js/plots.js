@@ -1,15 +1,25 @@
-//Start off with district Minneapolis, school year 18-19
-setGraphs(1, '18-19')
+function InitDashboard(district,year) {
+  getDistrictInfo(district,year);
+  createGenderChart(district,year);
+  createRaceGraph(district,year);
+  createGradeGraph(district,year);
+  createIncidentGraph(district,year);
+  createLineGraph(district,year);
+}
 
-//Call all the functions for the graphs
+InitDashboard(1, '18-19')
+
+
+//Call function to change graphs
 function setGraphs(district, year) {
-
-  getGenderGraph(district, year);
-  getRaceGraph(district, year);
-  getGradeGraph(district, year);
-  getIncidentGraph(district, year);
+  
   getDistrictInfo(district, year);
-  getLineGraph(district);
+  changeGenderGraph(district, year);
+  changeRaceGraph(district,year);
+  changeGradeGraph(district,year);
+  changeIncidentGraph(district,year);
+  changeLineGraph(district,year);
+
 }
 
 //District Info
@@ -40,8 +50,8 @@ function getDistrictInfo(district, year) {
   });
 }
 
-//Gender Bar Graph
-function getGenderGraph(district_number, year) {
+//Create gender Bar Graph
+function createGenderChart(district_number, year) {
   d3.json("../data/gender").then(data => {
 
     var filteredData = data.filter(sy => sy.school_year == year);
@@ -115,13 +125,45 @@ function getGenderGraph(district_number, year) {
     colors: ['#7790ad', '#8db5b2']
     };
 
-    var chart = new ApexCharts(document.querySelector("#bar1"), options);
-    chart.render();
+    genderChart = new ApexCharts(document.querySelector("#bar1"), options);
+    genderChart.render();
   }); 
 }
 
-//Ethnicity Bar Graphs
-function getRaceGraph(district_number, year) {
+//Update gender chart
+function changeGenderGraph(district_number,year) {
+  d3.json("../data/gender").then(data => {
+
+    var filteredData = data.filter(sy => sy.school_year == year);
+    filteredData = filteredData.filter(n => n.number == district_number);
+
+    var female_count = filteredData.map(s => s.female);
+    var male_count = filteredData.map(m => m.male);
+    var total_female = filteredData.map(tf  => tf.total_female);
+    var total_male = filteredData.map(tf  => tf.total_male);
+
+    
+    //Discipline Percentages
+    var discipline_total = (+female_count) + (+male_count)
+    var total_female_percent = (+female_count/discipline_total * 100).toFixed(2)
+    var total_male_percent = (+male_count/discipline_total * 100).toFixed(2)
+
+    //District Percentages
+    var district_total = (+total_female) + (+total_male)
+    var district_female_percent = (+total_female/district_total *100).toFixed(2)
+    var district_male_percent = (+total_male/district_total * 100).toFixed(2)
+  
+  genderChart.updateSeries([{
+    data: [district_female_percent, district_male_percent]
+    }, {
+    data: [total_female_percent, total_male_percent]
+
+  }])
+})
+}
+
+//Create ethnicity Bar Graphs
+function createRaceGraph(district_number, year) {
   d3.json("../data/race").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -216,14 +258,63 @@ function getRaceGraph(district_number, year) {
     colors: ['#7790ad', '#8db5b2']
     };
 
-    var chart = new ApexCharts(document.querySelector("#bar2"), options);
-    chart.render();
+    raceChart = new ApexCharts(document.querySelector("#bar2"), options);
+    raceChart.render();
   }); 
 }
-        
 
-//Grade Bar Chart
-function getGradeGraph(district_number, year) {
+//Update ethnicity Bar Graphs
+function changeRaceGraph(district_number, year) {
+  d3.json("../data/race").then(data => {
+    var filteredData = data.filter(sy => sy.school_year == year);
+    filteredData = filteredData.filter(n => n.number == district_number);
+  
+    //Variables for District Data Counts
+    var amer_indian_disctrict_count = filteredData.map(tai =>tai.total_amer_indian);
+    var asian_pacific_islander_disctrict_count = filteredData.map(tapi =>tapi.total_asian_pacific_islander);
+    var hispanic_disctrict_count = filteredData.map(th =>th.total_hispanic);
+    var black_disctrict_count = filteredData.map(tb =>tb.total_black);
+    var white_disctrict_count = filteredData.map(tw =>tw.total_white);
+    var multi_race_disctrict_count = filteredData.map(tmr =>tmr.total_multi_race);
+    var total_enrollment_disctrict_count = filteredData.map(te =>te.total_enrollment);
+    
+    //Variables for District Percentages
+    var district_amer_indian_percent = (+amer_indian_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_hispanic_percent = (+hispanic_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_asian_pacific_islander_percent = (+asian_pacific_islander_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_black_percent = (+black_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_white_percent = (+white_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_multi_race_percent = (+multi_race_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    
+    //Variables for Discupline Data Counts
+    var amer_indian_discipline_count = filteredData.map(ai =>ai.amer_indian);
+    var asian_pacific_islander_discipline_count = filteredData.map(api =>api.tasian_pacific_islander);
+    var hispanic_discipline_count = filteredData.map(h =>h.hispanic);
+    var black_discipline_count = filteredData.map(b =>b.tblack);
+    var white_discipline_count = filteredData.map(w =>w.white);
+    var multi_race_discipline_count = filteredData.map(mr =>mr.multi_race);
+    
+    //Variables for Discipline Percentages
+    var discipline_total = (+amer_indian_discipline_count) + (+asian_pacific_islander_discipline_count)+ (+hispanic_discipline_count)+ (+black_discipline_count)+ (+white_discipline_count)+ (+multi_race_discipline_count);
+    var disc_amer_indian_percent = (+amer_indian_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_asian_pacific_islander_percent = (+asian_pacific_islander_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_hispanic_percent = (+hispanic_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_black_percent = (+black_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_white_percent = (+white_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_multi_race_percent = (+multi_race_discipline_count/discipline_total * 100).toFixed(2);
+   
+   
+    raceChart.updateSeries([{
+      data: [district_amer_indian_percent, district_black_percent, district_hispanic_percent, district_multi_race_percent, district_white_percent, district_asian_pacific_islander_percent]
+      }, {
+      data: [disc_amer_indian_percent, disc_black_percent, disc_hispanic_percent, disc_multi_race_percent, disc_white_percent, disc_asian_pacific_islander_percent,]
+  
+    }])
+  }); 
+}
+
+//Create Grade Bar Chart
+function createGradeGraph(district_number, year) {
   d3.json("../data/grade").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -302,13 +393,50 @@ function getGradeGraph(district_number, year) {
     colors: ['#7790ad', '#8db5b2']
     };
 
-    var chart = new ApexCharts(document.querySelector("#bar3"), options);
-    chart.render();
+    gradeChart = new ApexCharts(document.querySelector("#bar3"), options);
+    gradeChart.render();
   }); 
 }
 
-//Incident Type Radial Chart
-function getIncidentGraph(district_number, year) {
+//Change Grade Bar Chart
+function changeGradeGraph(district_number, year) {
+  d3.json("../data/grade").then(data => {
+    var filteredData = data.filter(sy => sy.school_year == year);
+    filteredData = filteredData.filter(n => n.number == district_number);
+    
+    //Variables for District Data Counts
+    var grade_k_5_district_count = filteredData.map(k =>k.total_grade_k_5);
+    var grade_6_8_disctrict_count = filteredData.map(six =>six.total_grade_6_8);
+    var grade_9_12_district_count = filteredData.map(nine =>nine.total_grade_9_12);
+    var total_enrollment_disctrict_count = filteredData.map(te =>te.total_enrollment);
+       
+    //Variables for District Percentages
+    var district_k_5_percent = (+grade_k_5_district_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_6_8_percent = (+grade_6_8_disctrict_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+    var district_9_12_percent = (+grade_9_12_district_count/+total_enrollment_disctrict_count * 100).toFixed(2);
+  
+    //Variables for Discupline Data Counts
+    var k_5_discipline_count = filteredData.map(ai =>ai.grade_k_5);
+    var d6_8_discipline_count = filteredData.map(api =>api.grade_6_8);
+    var d9_12_discipline_count = filteredData.map(h =>h.grade_9_12);
+       
+    //Variables for Discipline Percentages
+    var discipline_total = (+k_5_discipline_count) + (+d6_8_discipline_count)+ (+d9_12_discipline_count);
+    var disc_k_5_percent = (+k_5_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_6_8_percent = (+d6_8_discipline_count/discipline_total * 100).toFixed(2);
+    var disc_9_12_percent = (+d9_12_discipline_count/discipline_total * 100).toFixed(2);    
+
+    gradeChart.updateSeries([{
+      data: [district_k_5_percent, district_6_8_percent, district_9_12_percent]
+      }, {
+      data: [disc_k_5_percent, disc_6_8_percent, disc_9_12_percent]
+  
+    }])
+  }); 
+}
+
+//Create Incident Type Radial Chart
+function createIncidentGraph(district_number, year) {
   d3.json("../data/incident").then(data => {
     var filteredData = data.filter(sy => sy.school_year == year);
     filteredData = filteredData.filter(n => n.number == district_number);
@@ -508,13 +636,173 @@ function getIncidentGraph(district_number, year) {
       }
     }
   }; 
-    var chart = new ApexCharts(document.querySelector("#pie1"), options);
-    chart.render();
+    incidentChart = new ApexCharts(document.querySelector("#pie1"), options);
+    incidentChart.render();
   }); 
 }
 
-function getLineGraph(district) {
+//Update Incident Type Radial Chart
+function changeIncidentGraph(district_number, year) {
+  d3.json("../data/incident").then(data => {
+    var filteredData = data.filter(sy => sy.school_year == year);
+    filteredData = filteredData.filter(n => n.number == district_number);
+    
+    //Variables for Incident Counts
+    var alcohol_count = filteredData.map(a =>a.alcohol);
+    var arson_count = filteredData.map(ar =>ar.arson);
+    var assault_count = filteredData.map(as =>as.assault);
+    var attendance_count = filteredData.map(at =>at.attendance);
+    var bomb_count = filteredData.map(b =>b.bomb);
+    var bomb_threat_count = filteredData.map(bt =>bt.bomb_threat);
+    var bullying_count = filteredData.map(bu =>bu.bullying);
+    var computer= filteredData.map(c =>c.computer);
+    var controlled_substances= filteredData.map(cs =>cs.controlled_substances);
+    var cyber_bullying= filteredData.map(cb =>cb.cyber_bullying);
+    var disruptive_disorderly= filteredData.map(dd =>dd.disruptive_disorderly);
+    var fighting = filteredData.map(f =>f.fighting);
+    var gang_activity = filteredData.map(g =>g.gang_activity);
+    var harassment= filteredData.map(h =>h.harassment);
+    var hazing= filteredData.map(hz =>hz.hazing);
+    var homicide= filteredData.map(ho =>ho.homicide);
+    var extortion= filteredData.map(e =>e.extortion);
+    var illegal_drugs= filteredData.map(i =>i.illegal_drugs);
+    var other= filteredData.map(o =>o.other);
+    var over_the_counter_meds= filteredData.map(otcm =>otcm.over_the_counter_meds);
+    var pyrotechnics= filteredData.map(p =>p.pyrotechnics);
+    var robbery_using_force= filteredData.map(r =>r.robbery_using_force);
+    var terroristic_threats= filteredData.map(tt =>tt.terroristic_threats);
+    var theft= filteredData.map(t =>t.theft);
+    var threat_intimidation= filteredData.map(ti =>ti.threat_intimidation);
+    var tobacco= filteredData.map(to =>to.tobacco);
+    var vandalism= filteredData.map(v =>v.vandalism);
+    var verbal_abuse= filteredData.map(va =>va.verbal_abuse);
+    var weapon= filteredData.map(w =>w.weapon);
+    
+    incidentChart.updateSeries([{
+      data: [
+        {
+          x: 'Alcohol', 
+          y: +alcohol_count,
+        },
+        {
+          x: 'Arson',
+          y:  +arson_count, 
+        },
+        {
+          x: 'Assault', 
+          y: +assault_count, 
+        },
+        {
+          x: 'Attendance', 
+          y: +attendance_count, 
+        },
+        {
+          x: 'Bomb',
+          y: +bomb_count, 
+        },
+        {
+          x:  'Bomb Threat', 
+          y: +bomb_threat_count,
+        },
+        {
+          x: 'Bullying',
+          y:  +bullying_count, 
+        },
+        {
+          x:  'Computer', 
+          y: +computer, 
+        },
+        {
+          x: 'Controlled Substances', 
+          y: +controlled_substances,
+        },
+        {
+          x: 'Cyber Bullying',
+          y:  +cyber_bullying, 
+        },
+        {
+          x:  'Disruptive Disorderly',
+          y:  +disruptive_disorderly,
+        },
+        {
+          x: 'Extortion', 
+          y:  +extortion, 
+        },
+        {
+          x: 'Fighting',
+          y: +fighting,
+        },
+        {
+          x: 'Gang Activity', 
+          y: +gang_activity, 
+        },
+        {
+          x: 'Harassment',
+          y: +harassment, 
+        },
+        {
+          x: 'Hazing',
+          y: +hazing, 
+        },
+        {
+          x: 'Homicide', 
+          y: +homicide,
+        },
+        {
+          x: 'Illegal Drugs',
+          y:  +illegal_drugs, 
+        },
+        {
+          x: 'Other',
+          y: +other, 
+        },
+        {
+          x: 'OCT Meds',
+          y: +over_the_counter_meds, 
+        },
+        {
+          x: 'Pyrotechnics',
+          y: +pyrotechnics, 
+        },
+        {
+          x: 'Robbery Using Force',
+          y: +robbery_using_force, 
+        },
+        {
+          x: 'Terroristic Threats',
+          y: +terroristic_threats, 
+        },          
+        {
+          x: 'Theft',
+          y: +theft, 
+        },          
+        {
+          x: 'Threat Intimidation',
+          y: +threat_intimidation, 
+        },          
+        {
+          x: 'Tobacco',
+          y: +tobacco, 
+        },          
+        {
+          x: 'Vandalism',
+          y: +vandalism, 
+        },
+        {
+          x: 'Verbal Abuse',
+          y: +verbal_abuse,
+        },
+        {
+          x: 'Weapon',
+          y:  +weapon,
+        }
+      ]
+  
+    }])
+ }); 
+}
 
+function createLineGraph(district) {
   d3.json("../data/incident").then((data) => {
     
     //Filter by district sent int
@@ -593,8 +881,29 @@ function getLineGraph(district) {
     };
 
     //Set it in the index.html
-    var chart = new ApexCharts(document.querySelector("#line1"), options);
-    chart.render();
+    lineChart = new ApexCharts(document.querySelector("#line1"), options);
+    lineChart.render();
   }); 
 
 }
+
+function changeLineGraph(district) {
+  d3.json("../data/incident").then((data) => {
+    
+    //Filter by district sent int
+    var filteredData = data.filter(sy => sy.number == district);
+
+    //Get the total enrollment and total incidents for the district
+    var total_enrollment = filteredData.map(sy => sy.total_enrollment);
+    var total_incident = filteredData.map(sy => sy.total_incident);
+
+    lineChart.updateSeries([{
+      data: total_enrollment
+      }, {
+      data: total_incident
+  
+    }])
+  }); 
+
+}
+
